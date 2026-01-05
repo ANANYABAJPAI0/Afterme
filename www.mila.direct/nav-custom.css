@@ -7,7 +7,7 @@
 .nav-main .menu-container.level-0.nav-spacing {
   display: flex;
   align-items: center;
-  gap: 8px; /* Increased from 24px for better breathing room */
+  gap: 35px; /* Increased from 24px for better breathing room */
 }
 
 /* Level 1 items - Modern list reset */
@@ -21,7 +21,7 @@
 .nav-main .btn-small.nav-link {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 55px;
   padding: 10px 10px; /* Increased horizontal padding */
   border-radius: 12px; /* Softer, more modern radius */
   font-weight: 500;

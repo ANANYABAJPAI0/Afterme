@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>After Me - Select Your Experience</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #C53678;
+            --primary-light: rgba(197, 54, 120, 0.1);
+            --secondary: #4C9A87;
+            --secondary-light: rgba(76, 154, 135, 0.1);
+            --accent: #FF6B35;
+            --light: #ffffff;
+            --light-gray: #f8f9fa;
+            --gray: #e9ecef;
+            --dark: #212529;
+            --text: #495057;
+            --text-light: #6c757d;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.12);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --border-radius: 16px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--light-gray);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 80px;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .logo {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .logo:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        .logo span {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 500px;
+            margin: 30px auto 0;
+            line-height: 1.6;
+        }
+
+        /* Mode Selection */
+        .mode-selection {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        @media (max-width: 1100px) {
+            .mode-selection {
+                grid-template-columns: 1fr;
+                max-width: 600px;
+                margin: 0 auto 60px;
+            }
+        }
+
+        /* Mode Card */
+        .mode-card {
+            background: var(--light);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            position: relative;
+            border: 1px solid var(--gray);
+        }
+
+        .mode-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+            border-color: transparent;
+        }
+
+        .mode-card.compassionate:hover {
+            border-top-color: var(--primary);
+        }
+
+        .mode-card.planning:hover {
+            border-top-color: var(--secondary);
+        }
+
+        .card-header {
+            padding: 40px 40px 30px;
+            position: relative;
+        }
+
+        .mode-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mode-card.compassionate .mode-icon {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .mode-card.planning .mode-icon {
+            background: var(--secondary-light);
+            color: var(--secondary);
+        }
+
+        .mode-icon:before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: inherit;
+            filter: blur(10px);
+            opacity: 0.5;
+        }
+
+        .mode-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+
+        .mode-description {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .card-features {
+            padding: 0 40px 40px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .feature-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .mode-card.compassionate .feature-icon {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .mode-card.planning .feature-icon {
+            background: var(--secondary-light);
+            color: var(--secondary);
+        }
+
+        .feature-text {
+            color: var(--text);
+            line-height: 1.5;
+        }
+
+        .card-cta {
+            padding: 30px 40px;
+            background: var(--light-gray);
+            border-top: 1px solid var(--gray);
+            position: relative;
+        }
+
+        .mode-button {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 18px 30px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mode-card.compassionate .mode-button {
+            background: var(--primary);
+            color: white;
+        }
+
+        .mode-card.planning .mode-button {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .mode-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .mode-card.compassionate .mode-button:hover {
+            background: #b02e6c;
+        }
+
+        .mode-card.planning .mode-button:hover {
+            background: #408173;
+        }
+
+        .button-text {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Decorative Elements */
+        .decorative-line {
+            position: absolute;
+            top: 0;
+            left: 40px;
+            right: 40px;
+            height: 3px;
+            background: linear-gradient(to right, transparent, currentColor, transparent);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .mode-card:hover .decorative-line {
+            opacity: 0.5;
+        }
+
+        .mode-card.compassionate .decorative-line {
+            color: var(--primary);
+        }
+
+        .mode-card.planning .decorative-line {
+            color: var(--secondary);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding-top: 60px;
+            border-top: 1px solid var(--gray);
+        }
+
+        .footer-text {
+            color: var(--text-light);
+            margin-bottom: 30px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 12px 24px;
+            border-radius: 50px;
+            background: var(--light);
+            border: 1px solid var(--gray);
+            transition: var(--transition);
+        }
+
+        .back-link:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .loading-content {
+            text-align: center;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid var(--gray);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        .loading-text {
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 20px;
+            }
+
+            .logo {
+                font-size: 2.5rem;
+            }
+
+            .mode-selection {
+                gap: 30px;
+            }
+
+            .card-header,
+            .card-features,
+            .card-cta {
+                padding: 30px;
+            }
+
+            .mode-title {
+                font-size: 1.8rem;
+            }
+
+            .mode-icon {
+                width: 70px;
+                height: 70px;
+                font-size: 2rem;
+                margin-bottom: 25px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .mode-selection {
+                grid-template-columns: 1fr;
+            }
+
+            .card-header,
+            .card-features,
+            .card-cta {
+                padding: 25px;
+            }
+
+            .mode-title {
+                font-size: 1.6rem;
+            }
+
+            .mode-description {
+                font-size: 1rem;
+            }
+
+            .mode-button {
+                padding: 16px 25px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Loading...</div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="logo">After <span>Me</span></h1>
+            <p class="tagline">A digital platform that brings clarity when families need it most</p>
+        </header>
+
+        <!-- Mode Selection -->
+        <div class="mode-selection">
+            <!-- Compassionate View -->
+            <div class="mode-card compassionate">
+                <div class="decorative-line"></div>
+                <div class="card-header">
+                    <div class="mode-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h2 class="mode-title">Compassionate View</h2>
+                    <p class="mode-description">Experience the emotional significance and peace of mind that comes with thoughtful planning for your loved ones.</p>
+                </div>
+
+                <div class="card-features">
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <p class="feature-text">Focus on emotional well-being and family harmony</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <p class="feature-text">Understanding the human impact of planning</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <p class="feature-text">Peace of mind for both you and your loved ones</p>
+                    </div>
+                </div>
+
+                <div class="card-cta">
+                    <a href="compassionate-view.html" class="mode-button" id="compassionateBtn">
+                        <span class="button-text">
+                            <i class="fas fa-heart"></i>
+                            Enter Compassionate View
+                        </span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Practical Planning -->
+            <div class="mode-card planning">
+                <div class="decorative-line"></div>
+                <div class="card-header">
+                    <div class="mode-icon">
+                        <i class="fas fa-clipboard-check"></i>
+                    </div>
+                    <h2 class="mode-title">Practical Planning</h2>
+                    <p class="mode-description">Access structured, organized documentation and management of all important information for your family's future.</p>
+                </div>
+
+                <div class="card-features">
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <p class="feature-text">Step-by-step guidance through the planning process</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <p class="feature-text">Secure document organization and storage</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <p class="feature-text">Actionable checklists and reminders</p>
+                    </div>
+                </div>
+
+                <div class="card-cta">
+                    <a href="practical-planning.html" class="mode-button" id="planningBtn">
+                        <span class="button-text">
+                            <i class="fas fa-clipboard-check"></i>
+                            Enter Practical Planning
+                        </span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p class="footer-text">After Me helps you organize everything in one place so your loved ones aren't left guessing during life's most difficult moments.</p>
+            <a href="index.html" class="back-link">
+                <i class="fas fa-arrow-left"></i>
+                Back to Home
+            </a>
+        </footer>
+    </div>
+
+    <script>
+        // Remove loading overlay
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                const loadingOverlay = document.getElementById('loadingOverlay');
+                loadingOverlay.style.opacity = '0';
+                loadingOverlay.style.visibility = 'hidden';
+                
+                // Animate cards in sequence
+                const cards = document.querySelectorAll('.mode-card');
+                cards.forEach((card, index) => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(30px)';
+                    
+                    setTimeout(() => {
+                        card.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, index * 100);
+                });
+            }, 800);
+        });
+
+        // Smooth navigation
+        const buttons = document.querySelectorAll('.mode-button');
+        buttons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Add click effect
+                this.style.transform = 'scale(0.98)';
+                
+                // Show loading overlay
+                const loadingOverlay = document.getElementById('loadingOverlay');
+                loadingOverlay.style.opacity = '1';
+                loadingOverlay.style.visibility = 'visible';
+                
+                // Navigate after delay
+                setTimeout(() => {
+                    window.location.href = this.getAttribute('href');
+                }, 300);
+            });
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === '1' || e.key === 'c') {
+                document.getElementById('compassionateBtn').click();
+            } else if (e.key === '2' || e.key === 'p') {
+                document.getElementById('planningBtn').click();
+            } else if (e.key === 'Escape') {
+                window.location.href = 'index.html';
+            }
+        });
+
+        // Add hover effects
+        const cards = document.querySelectorAll('.mode-card');
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                const icon = this.querySelector('.mode-icon');
+                icon.style.transform = 'scale(1.05)';
+                icon.style.transition = 'transform 0.3s ease';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                const icon = this.querySelector('.mode-icon');
+                icon.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>
