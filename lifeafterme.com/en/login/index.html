@@ -680,7 +680,6 @@ var base_url  = "content/themes/akrolab-theme/index.html"
   }
 </script>
 
-
 <script>
   document.getElementById('loginForm').addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -695,43 +694,37 @@ var base_url  = "content/themes/akrolab-theme/index.html"
     try {
       const res = await fetch('http://localhost:5000/api/auth/login', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json'
+        },
         body: JSON.stringify({ email, password })
       });
 
       const data = await res.json();
 
-      // ❌ WRONG LOGIN
+      // ❌ LOGIN FAILED
       if (!res.ok) {
         msg.innerText = data.message || 'Invalid credentials';
         msg.style.color = 'red';
-
-        // refresh feel
-        setTimeout(() => {
-          msg.innerText = '';
-          emailInput.value = '';
-          passwordInput.value = '';
-        }, 1200);
-
         return;
       }
 
-      // ✅ SUCCESS LOGIN
-      localStorage.setItem('token', data.token);
+      // ✅ LOGIN SUCCESS
+      // 🔐 STORE TOKEN
+      localStorage.setItem("token", data.token);
 
-      // redirect to index.html
-      window.location.href = '../../../www.mila.direct/index.html';
+      // 🚀 REDIRECT TO DEPLOYED DASHBOARD
+      window.location.href = "https://after-me-dashboard.vercel.app/dashboard";
 
     } catch (err) {
+      console.error(err);
       msg.innerText = 'Server error';
       msg.style.color = 'red';
-
-      setTimeout(() => {
-        msg.innerText = '';
-      }, 1200);
     }
   });
 </script>
+
+
 <script>
   document.getElementById('signupForm').addEventListener('submit', async (e) => {
     e.preventDefault();

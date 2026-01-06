@@ -51,38 +51,62 @@ export const signup = async (req, res) => {
     }
   }
 };
-
-/* ===================== LOGIN ===================== */
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    console.log('LOGIN EMAIL:', email);
-
     const user = await User.findOne({ email });
-    console.log('USER FOUND:', user);
-
     if (!user) {
-      return res.status(401).json({ message: 'Invalid credentials' });
+      return res.status(401).json({ message: "Invalid credentials" });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
-    console.log('PASSWORD MATCH:', isMatch);
-
     if (!isMatch) {
-      return res.status(401).json({ message: 'Invalid credentials' });
+      return res.status(401).json({ message: "Invalid credentials" });
     }
 
     const token = jwt.sign(
       { id: user._id },
       process.env.JWT_SECRET,
-      { expiresIn: '7d' }
+      { expiresIn: "7d" }
     );
 
-    return res.json({ token });
+    // ✅ RETURN TOKEN (NO COOKIE)
+    res.json({
+      token,
+      user: {
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email
+      }
+    });
 
   } catch (err) {
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: "Server error" });
   }
 };
 
+export const getMe = async (req, res) => {
+  try {
+    const authHeader = req.headers.authorization;
+
+    if (!authHeader) {
+      return res.status(401).json({ message: "No token" });
+    }
+
+    const token = authHeader.split(" ")[1]; // Bearer <token>
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    const user = await User.findById(decoded.id).select("-password");
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.json(user);
+
+  } catch (err) {
+    res.status(401).json({ message: "Invalid token" });
+  }
+};
